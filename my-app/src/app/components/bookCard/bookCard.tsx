@@ -7,12 +7,12 @@ import Marginer from "../marginer/Marginer";
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css';
 import { useState } from "react";
+import SCREEN from "../../constants/screen";
 
 const CardContainer = styled.div`
  min-height: 4.3em;
  box-shadow : 0 1.3px 12px -3px rgba(0, 0, 0, 0.4);
   ${tw`
-      relative
       flex
       sm:flex-row
       justify-center
@@ -32,7 +32,7 @@ const CardContainer = styled.div`
 
 const ItemContainer = styled.div`
 
-  ${tw`flex items-center`}
+  ${tw`flex items-center cursor-pointer relative`}
 `;
 
 const Icon = styled.span`
@@ -68,11 +68,22 @@ const LineSeparator = styled.span`
  `}
 `;
 
-const DateCalendar = styled(Calendar)`
+const DateCalendar:any = styled(Calendar)<{offset : any}>`
  position : absolute;
  max-width : none;
  top : 3.5em;
- left : -2em;
+ left : 0em;
+ 
+ ${
+    (({offset}) => offset && css`
+     left : -6em;
+    `)
+ }
+
+ @media (min-width:${SCREEN.md}) {
+  top: 3.5em;
+  left : -2em;
+ }
 `
 
 const BookCard = () => {
@@ -80,39 +91,37 @@ const BookCard = () => {
  const [startDate, setStartDate] = useState<Date>(new Date());
  const [openStartCalendar,setOpenStartCalendar] = useState(false);
 
- const [endDate,setEndDate] = useState<Date>(new Date());
- const [openEndCalendar,setOpenEndCalendar] = useState(false);
+ const [returnDate,setReturnDate] = useState<Date>(new Date());
+ const [openReturnCalendar,setOpenReturnCalendar] = useState(false);
 
  const controlCalendar = (e:any,type:string) => {
-    //  console.log(e.target)
         if(type==="start"){
             setOpenStartCalendar(prev => !prev);
-            setOpenEndCalendar(false);
+            setOpenReturnCalendar(false);
         }
         else{
-            setOpenEndCalendar(prev => !prev);
+            setOpenReturnCalendar(prev => !prev);
             setOpenStartCalendar(false);
         }
  }
 
- console.log(startDate,endDate)
 
   return (
     <CardContainer>
-      <ItemContainer>
+      <ItemContainer onClick={(e) => controlCalendar(e,"start")}>
         <Icon>
-          <FontAwesomeIcon icon={faCalendarAlt} onClick={(e) => controlCalendar(e,"start")}/>
+          <FontAwesomeIcon icon={faCalendarAlt} />
         </Icon>
         <Name isactive={openStartCalendar}>Pick Up Date</Name>
         {openStartCalendar && <DateCalendar value={startDate} onChange={setStartDate as any}/>}
       </ItemContainer>
       <LineSeparator />
-      <ItemContainer>
+      <ItemContainer onClick={(e) => controlCalendar(e,"end")}>
         <Icon>
-          <FontAwesomeIcon icon={faCalendarAlt} onClick={(e) => controlCalendar(e,"end")}/>
+          <FontAwesomeIcon icon={faCalendarAlt} />
         </Icon>
-        <Name isactive={openEndCalendar}>Return Date</Name>
-        {openEndCalendar && <DateCalendar value={endDate} onChange={setEndDate as any}/>}
+        <Name isactive={openReturnCalendar}>Return Date</Name>
+        {openReturnCalendar && <DateCalendar offset value={returnDate} onChange={setReturnDate as any}/>}
       </ItemContainer>
     <Marginer direction="horizontal" margin="2em"/>
     <Button text="Book Your Ride" theme="filled"/>
