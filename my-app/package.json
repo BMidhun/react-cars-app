@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.2.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@reduxjs/toolkit": "^1.6.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -15,6 +20,7 @@
     "@types/react-redux": "^7.1.18",
     "react": "^17.0.2",
     "react-burger-menu": "^3.0.6",
+    "react-calendar": "^3.4.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-responsive": "^8.2.0",
@@ -45,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-calendar": "^3.4.2",
     "@types/react-responsive": "^8.0.3",
     "@types/styled-components": "^5.1.11",
     "autoprefixer": "^9.8.6",
